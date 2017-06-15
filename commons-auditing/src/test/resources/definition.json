@@ -1,0 +1,112 @@
+{
+  "TableName": "AuditEntry",
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "HealthSystem",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "TimeStampId",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "PatientId",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "Payer",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "MemberId",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "UserId",
+      "AttributeType": "S"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "HealthSystem",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "TimeStampId",
+      "KeyType": "RANGE"
+    }
+  ],
+  "LocalSecondaryIndexes": [
+    {
+      "IndexName": "HealthSystem_PatientId_Index",
+      "KeySchema": [
+        {
+          "AttributeName": "HealthSystem",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "PatientId",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "INCLUDE",
+        "NonKeyAttributes": [
+          "TimeStampId"
+        ]
+      }
+    }
+  ],
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "UserId_TimeStampId_Index",
+      "KeySchema": [
+        {
+          "AttributeName": "UserId",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "TimeStampId",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "INCLUDE",
+        "NonKeyAttributes": [
+          "HealthSystem"
+        ]
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 10,
+        "WriteCapacityUnits": 10
+      }
+    },
+    {
+      "IndexName": "Payer_MemberId_Index",
+      "KeySchema": [
+        {
+          "AttributeName": "Payer",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "MemberId",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "INCLUDE",
+        "NonKeyAttributes": [
+          "HealthSystem"
+        ]
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 10,
+        "WriteCapacityUnits": 10
+      }
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 10,
+    "WriteCapacityUnits": 10
+  }
+}

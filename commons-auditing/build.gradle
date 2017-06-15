@@ -1,0 +1,37 @@
+apply plugin: "aspectj.gradle"
+
+sourceSets.test.groovy.srcDirs += ["src/test/java"]
+
+dependencies {
+    compile libs.groovy,
+            libs.awsDynamoDB,
+            libs.springContext,
+            libs.slf4j,
+            libs.aspectj,
+            libs.aspectjweaver,
+            libs.aspectjtools,
+            libs.springAspects
+
+    testCompile libs.testSuite,
+            libs.dynamodbLocal,
+            libs.jsonSimple,
+            libs.guava
+
+    //Need sqlite for embedded dynamodb instance
+    testRuntime('com.almworks.sqlite4java:sqlite4java')
+
+}
+
+//need to add sqlite to test build directory so it is available to create the dynamodb instance
+def runtimeTestLibraries = new File(buildDir, 'runtimeTestLibraries')
+
+//set the system property library path to the current runtimeTestLibraries dir
+tasks.withType(Test) {
+    dependsOn 'copyRuntimeLibs'
+    systemProperty "java.library.path", runtimeTestLibraries
+}
+//copy current test runtime configurations into runtimeTestLibraries dir
+task copyRuntimeLibs(type: Copy) {
+    into runtimeTestLibraries
+    from configurations.testRuntime
+}

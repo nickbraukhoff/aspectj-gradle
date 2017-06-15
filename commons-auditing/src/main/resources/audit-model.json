@@ -1,0 +1,12 @@
+{
+  "HealthSystem": "ATE_DEV_EPIC",
+  "TimeStampId": "2016-04-07T05:00Z",
+  "PatientId": "23412341234",
+  "Payer": "ATE_DEV_EPIC",
+  "MemberId": "254122341234",
+  "UserId": "ATE_DEV_EPIC_foobar",
+  "Service": "ATE_DEV_EPIC",
+  "CorrelationId": "4471ccbf-1c6a-4869-bfb5-c4a0c02da9e5",
+  "Events": "ATE_DEV_EPIC",
+  "SessionId": "4471ccbf-1c6a-4869-bfb5-c4a0c02da9e5"
+}

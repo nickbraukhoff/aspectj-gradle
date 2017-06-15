@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        maven { url "https://nexus.moxehealth.com/repository/maven-public" }
+
+    }
+    dependencies {
+        classpath "gradle.plugin.aspectj:gradle-aspectj:0.1.6"
+    }
+}
+
+ext {
+    aspectjVersion = '1.8.10'
+}
+
+
+subprojects {
+//    sourceCompatibility = 1.8
+
+    apply plugin: 'groovy'
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+
+    apply from: "$rootDir/gradle/repositories.gradle"
+    apply from: "$rootDir/gradle/dependencies.gradle"
+
+    sourceSets.main.groovy.srcDirs += ["src/main/java"]
+}
+
+task createWrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+    distributionUrl = "http://services.gradle.org/distributions/gradle-${GradleVersion}-bin.zip"
+}
